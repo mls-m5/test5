@@ -1,0 +1,3 @@
+[submodule "matmake"]
+	path = matmake
+	url = git@github.com:mls-m5/matmake.git

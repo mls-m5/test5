@@ -1,0 +1,7 @@
+
+*.o
+test5
+.depend
+.project
+.cproject
+.settings\*
