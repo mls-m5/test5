@@ -28,7 +28,7 @@ static list<Sound*> soundBufferList;
 SoundIntance playingSounds[MAXPLAYINGSOUNDS];
 
 double generalFrequency = 1;
-double generalVolume = 1. / 16.;
+double generalVolume = 1. / (MAXPLAYINGSOUNDS + 1);
 
 void mixaudio(void* unused, Uint8* stream, int len) {
 
@@ -129,7 +129,7 @@ void Sound::play(bool looping) {
 	if (not dataContainer) {
 		return;
 	}
-	SDL_LockAudio();
+	AudioLock();
 	int index;
 	for ( index=0; index<MAXPLAYINGSOUNDS; ++index ) {
 		if (!playingSounds[index].playing) {
@@ -144,8 +144,6 @@ void Sound::play(bool looping) {
 	playingSounds[index].dpos = 0;
 	playingSounds[index].looping = looping;
 	playingSounds[index].playing = true;
-
-	SDL_UnlockAudio();
 }
 
 void Sound::playLoop() {
@@ -176,10 +174,9 @@ void Sound::clear() {
 		//otherwise no other object point at the data
 		for (int i = 0; i < MAXPLAYINGSOUNDS; ++i){
 			if (playingSounds[i].data == dataContainer->data){
-				SDL_LockAudio();
+				AudioLock();
 				playingSounds[i].playing = false;
 				playingSounds[i].data = 0;
-				SDL_UnlockAudio();
 			}
 
 		}

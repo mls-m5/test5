@@ -61,4 +61,16 @@ protected:
     std::shared_ptr<DataContainer> dataContainer;
 };
 
+//Class that locks and unlocks when going out of scope
+class AudioLock{
+public:
+	AudioLock() {
+		SDL_LockAudio();
+	}
+
+	~AudioLock() {
+		SDL_UnlockAudio();
+	}
+};
+
 #endif /* SOUND_H_ */
